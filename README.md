@@ -1,3 +1,7 @@
+# 해당 프로젝트는 **점프 투 스프링부트 온라인 자료**를 바탕으로 진행되었습니다.
+
+출처 : https://wikidocs.net/book/7601
+
 ## Build.gradle
 ### 1. Implementation(ex. JPA)
 **build.gradle 파일의 implementation은 해당 라이브러리 설치를 위해 일반적으로 사용하는 설정이다.** implementation은 해당 라이브러리가 변경되더라도 이 라이브러리와 연관된 모든 모듈들을 컴파일하지 않고 직접 관련이 있는 모듈들만 컴파일하기 때문에 rebuild 속도가 빠르다.
