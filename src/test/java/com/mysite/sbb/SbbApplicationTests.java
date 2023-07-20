@@ -2,6 +2,7 @@ package com.mysite.sbb;
 
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,8 @@ class SbbApplicationTests {
 
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private QuestionService questionService;
 
     @Test
     void makeQuestionTest() {
@@ -88,6 +91,16 @@ class SbbApplicationTests {
         Question question = questionId.get();
         this.questionRepository.delete(question);
         assertEquals(1, this.questionRepository.count());
+    }
+
+    // 대용량 데이터 테스트 코드
+    @Test
+    void testJpa() {
+        for (int i = 1; i<= 300; i++){
+            String subject = String.format("테스트 데이터입니다:[%03d]", i);
+            String content = "내용 무";
+            this.questionService.create(subject, content);
+        }
     }
 
 
