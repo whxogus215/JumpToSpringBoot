@@ -39,3 +39,39 @@ build.gradle 파일의 compileOnly는 **해당 라이브러리가 컴파일 단�
 엔티티에서 작성한 이름은 카멜 케이스이다. (ex. createDate) 이는 실제 테이블에서는
 스네이크 케이스로 변경된다. (ex. createDate(엔티티) -> create_date(실제 테이블 컬럼))
 
+## @Bean을 통해 주입하는 방법
+```java
+@RequiredArgsConstructor
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public SiteUser create(String username, String email, String password) {
+        SiteUser user = new SiteUser();
+        user.setUsername(username);
+        user.setEmail(email);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(password));
+        this.userRepository.save(user);
+        return user;
+    }
+}
+```
+해당 코드처럼 `BCryptPasswordEncoder` 객체를 직접 생성하는 것은 바람직하지 않다. 만약 구현체가 바뀔 경우, 해당 코드가 쓰여진 곳을
+전부 찾아서 일일이 수정해야하는 번거로움이 생긴다.
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    ... 생략 ...
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+이처럼 Config 파일 내에서 @Bean으로 등록하면, 나중에 구현체가 바뀔 경우 해당 반환 객체만 바꿔주면 된다. 실제 해당 객체가 사용된 코드에는
+인터페이스 타입으로 작성되었기 때문에 구현체만 바꾸면 알아서 다 바뀌게 된다.(해당 인터페이스를 구현한 객체만 가능)
