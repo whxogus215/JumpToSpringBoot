@@ -43,6 +43,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
+    // 마크다운 라이브러리
+    implementation 'org.commonmark:commonmark:0.21.0'
+
 }
 
 tasks.named('test') {
