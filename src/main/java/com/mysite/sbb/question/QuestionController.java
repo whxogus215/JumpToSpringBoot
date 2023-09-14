@@ -4,6 +4,7 @@ import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/question")
 @Controller
@@ -32,6 +34,7 @@ public class QuestionController {
 //        List<Question> questionList = questionService.getList();
 //        model.addAttribute("questionList", questionList);
 //        return "question_list";
+        log.info("page:{}, kw:{}", page, kw);
         Page<Question> paging = this.questionService.getList(page, kw);
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
